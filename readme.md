@@ -1,0 +1,104 @@
+## Postman Scripts For Validating Security Headers + Not No Secure Security Headers
+
+HTTP Security Headers should be present in all the responses whether its a web application or API at bare minimum.
+
+A lot of time we perform an assessment and recommend security headers. Developers configure these and while revalidation we observe them not to be in place again. Well, you have to validate everything and report back? Why not automate it for the Postman Collections? 
+
+So, there should a simple Postman Test which can enable the developers configure and then test APIs on their own end to ensure everything is in place. 
+
+The following postman test does the same work. 
+
+- For each API, add the below script in the Tests section.
+- Open up the console in postman.
+- Submit the request.
+- Validate the results in the console. 
+- In case script doesn't work as intended, well you can troubleshoot.
+- While also feel free to add more tests to the same or revamp the script to a better one by creating a pull request. 
+
+The below scripts checks for the following headers. 
+
+1. Server Header
+2. X-Powered-By Header
+3. X-AspNet-Version Header
+4. X-Content-Type-Options Header
+5. X-Frame-Options Header
+6. Cache-Control Header
+7. Strict-Transport-Security Header
+8. X-XSS-Protection Header
+9. Content-Security-Policy Header
+
+```
+// Author - Kamran Saifullah - deFr0ggy
+// 4th June, 2023
+// @CyDefOps, @deFr0ggy
+// https://linkedin.com/in/KamranSaifullah
+// https://cydefops.com
+
+
+// Below Headers Should Not Be Present
+pm.test("Checking Server Header", function () {
+        if (pm.expect(pm.response.headers.find("Server"))) {
+            console.info("Server header is not present - Its Good!!!")
+        } else {
+            console.warn("Remove The Server Header");
+        }
+    });
+
+pm.test("Checking X-Powered-By Header", function () {
+        if (pm.expect(pm.response.headers.find("X-Powered-By"))) {
+            console.info("X-Powered-By header is not present - Its Good!!!")
+        } else {
+            console.warn("Remove The X-Powered-By Header");
+        }
+    });
+
+pm.test("Checking X-AspNet-Version Header", function () {
+        if (pm.expect(pm.response.headers.find("X-AspNet-Version"))) {
+            console.info("X-AspNet-Version header is not present - Its Good!!!")
+        } else {
+            console.warn("Remove The X-AspNet-Version Header");
+        }
+    });
+
+// Below are the Mandatory Headers
+
+pm.test("Checking X-Content-Type-Options Header", function () {
+     if(pm.expect(pm.response.headers.find("X-Content-Type-Options"))) {
+        console.info("X-Content-Type-Options Header is Set - Its Good!!!")
+    } else {
+        console.warn("X-Content-Type-Options Header is NOT SET!")
+    }
+    });
+
+pm.test("Checking X-XSS-Protection Header", function () {
+     if(pm.expect(pm.response.headers.find("X-XSS-Protection"))) {
+        console.info("X-XSS-Protection Header is Set - Its Good!!!")
+    } else {
+        console.warn("X-XSS-Protection Header is NOT SET!")
+    }
+    });
+
+pm.test("Checking Content-Security-Policy Header", function () {
+    if(pm.expect(pm.response.headers.find("Content-Security-Policy"))) {
+        console.info("Content-Security-Policy Header is Set - Its Good!!!")
+    } else {
+        console.warn("Content-Security-Policy Header is NOT SET!")
+    }
+    });
+
+pm.test("Checking Cache-Control Header", function () {
+    if(pm.expect(pm.response.headers.find("Cache-Control"))) {
+        console.info("Cache-Control Header is Set - Its Good!!!")
+    } else {
+        console.warn("Cache-Control Header is NOT SET!")
+    }
+    });
+
+pm.test("Checking Strict-Transport-Security Header", function () {
+    if(pm.expect(pm.response.headers.find("Strict-Transport-Security"))) {
+        console.info("Strict-Transport-Security Header is Set - Its Good!!!")
+    } else {
+        console.warn("Strict-Transport-Security Header is NOT SET!")
+    }
+    });
+```
