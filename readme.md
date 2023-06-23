@@ -24,12 +24,13 @@ The below scripts checks for the following headers.
 1. Server Header
 2. X-Powered-By Header
 3. X-AspNet-Version Header
-4. X-Content-Type-Options Header
-5. X-Frame-Options Header
-6. Cache-Control Header
-7. Strict-Transport-Security Header
-8. X-XSS-Protection Header
-9. Content-Security-Policy Header
+4. X-AspNetMvc-Version
+5. X-Content-Type-Options Header
+6. X-Frame-Options Header
+7. Cache-Control Header
+8. Strict-Transport-Security Header
+9. X-XSS-Protection Header
+10. Content-Security-Policy Header
 
 ## 3. In Working
 
@@ -71,6 +72,15 @@ pm.test("Checking X-AspNet-Version Header", function () {
             console.info("X-AspNet-Version header is not present - Its Good!!!")
         }
     });
+
+pm.test("Checking X-AspNetMvc-Version Header", function () {
+        if (pm.response.headers.get("X-AspNetMvc-Version")) {
+            console.warn("Remove The X-AspNetMvc-Version Header");
+        } else {
+            console.info("X-AspNetMvc-Version header is not present - Its Good!!!")
+        }
+    });
+
 
 // Below are the Mandatory Headers
 
